@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confess to Crush</title>
+    <style>
+        body {
+            background-color: #FFF3CD;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .confession {
+            background-color: #FFF;
+            border: 1px solid #DDD;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .confession h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .confession p {
+            margin-bottom: 20px;
+        }
+
+        .confession input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #DDD;
+            border-radius: 5px;
+        }
+
+        .confession input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            background-color: #FFC107;
+            border: none;
+            border-radius: 5px;
+            color: #FFF;
+            cursor: pointer;
+        }
+
+        .confession input[type="submit"]:hover {
+            background-color: #FFD740;
+        }
+    </style>
+</head>
+<body>
+    <div class="confession">
+        <h2>Confess to my angel</h2>
+        <p>Dear ica,</p>
+        <p>hi ica i have something to talk i like you since early november and keep going positif activity,love you from secret admirar ---by X</p>
+        <input type="text" id="crushConfession" placeholder="Type your secret message here...">
+        <input type="submit" id="submitConfession" value="Submit Confession">
+    </div>
+
+    <script>
+        document.getElementById('submitConfession').addEventListener('click', function () {
+            var crushConfession = document.getElementById('crushConfession').value;
+
+            if (crushConfession.trim() === '') {
+                alert('Please enter a secret message for your crush.');
+                return;
+            }
+
+            // Make an HTTP POST request to the server with the confession
+            fetch('/api/submit-confession', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: crushConfession })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Your confession has been sent anonymously to your crush.');
+                } else {
+                    alert('Failed to submit your confession. Please try again later.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to submit your confession. Please try again later.');
+            });
+        });
+    </script>
+</body>
+</html>
